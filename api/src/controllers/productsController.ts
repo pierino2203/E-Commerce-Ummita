@@ -1,11 +1,18 @@
-import { RequestHandler } from "express";
+import { RequestHandler, Request } from "express";
+import { isValidObjectId } from "mongoose";
 import Product from "../models/Product";
+type ReqQuery = { name ?: string }
+type ReqDictionary = {}
+type ReqBody = { foo1 ?: string }
+type ResBody = { foo3 ?: string }
+type SomeHandlerRequest = Request<ReqDictionary, ResBody, ReqBody, ReqQuery>
 
-
-export const getProduct : RequestHandler = async (req,res) =>  {
+export const getProduct: RequestHandler = async (req:SomeHandlerRequest,res) =>  {
   try {
-    const {name} = req.body
+    const {name}  = req.query
+    
     const product = await Product.find();
+    console.log(product)
     if(!name){
       return res.status(200).json(product)
     }
@@ -19,5 +26,81 @@ export const getProduct : RequestHandler = async (req,res) =>  {
     }
   } catch (error) {
     console.log('Error en Get Products',error)
+  }
+}
+
+export const GetProductById : RequestHandler = async (req,res)  =>  {
+  try {
+    const {id} = req.params
+    if(isValidObjectId(id)){
+      const product = await Product.findById(id)
+      if(product){
+        return res.status(200).json(product)
+      }else{
+        return res.status(404).send('No se encuentra el producto con ese id')
+      }
+    }else{
+      return res.status(404).send('Id no es valido')
+    }
+    
+  } catch (error) {
+    console.log('Error en GET PRODUCT BY ID',error)
+  }
+}
+
+export const postProduct : RequestHandler = async (req,res) => {
+  try {
+    const {name,precio_compra,precio_venta,description,img,stock} = req.body
+    if(!name || !precio_compra || !precio_venta || !stock){
+      return res.status(404).send('Faltan datos requeridos') 
+    }else{
+      const find = await Product.findOne({name: name})
+      if(find){
+        return res.status(404).send("Ya existe un producto con ese nombre")
+      }else{
+        const product = new Product(req.body)
+        await product.save()
+        return res.status(200).json(product)
+      }
+    }
+  } catch (error) {
+    console.log('Error en POST PRODUCT',error)
+  }
+  
+}
+export const deleteProduct : RequestHandler = async (req,res) =>  {
+  try {
+    const {id} = req.params
+    if(isValidObjectId(id)){
+      const find = await Product.findByIdAndDelete(id)
+      if(find){
+        return res.status(200).json("Producto eliminado con exito")
+      }else{
+        return res.status(404).send("No exite el producto")
+      }
+    }else{
+      return res.status(404).send("Id no valido")
+    }
+  } catch (error) {
+    console.log('Error en BORRAR PRODUCTO',error)
+  }
+}
+
+export const updateProduct :RequestHandler = async (req,res) => {
+  try {
+    const {id} = req.params
+    
+    if(isValidObjectId(id)){
+      const find = await Product.findByIdAndUpdate(id,req.body)
+      if(find){
+        return res.status(200).json(find)
+      }else{
+        return res.status(404).send("No exite el producto")
+      }
+    }else{
+      return res.status(404).send("Id no valido")
+    }
+  } catch (error) {
+    console.log('Error en ACTUALIZAR PRODUCTO',error)
   }
 }

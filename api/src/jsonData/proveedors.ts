@@ -8,3 +8,5 @@ const proveedors : object[]= [
   {"name": "PIU-BELLA"},
   {"name": "UMMA"},
 ]
+
+export default proveedors
