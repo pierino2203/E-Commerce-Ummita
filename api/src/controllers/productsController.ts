@@ -12,7 +12,7 @@ export const getProduct: RequestHandler = async (req:SomeHandlerRequest,res) => 
     const {name}  = req.query
     
     const product = await Product.find();
-    console.log(product)
+    
     if(!name){
       return res.status(200).json(product)
     }
