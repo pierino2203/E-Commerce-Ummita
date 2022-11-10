@@ -1,9 +1,11 @@
 import { Action, stateTypes } from "../../interfaces/interfaces"
-import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME } from "../actions"
+import { GET_PRODUCTS, GET_PRODUCTS_BY_ID, GET_PRODUCTS_BY_NAME, POST_USER } from "../actions"
 
 const inicialState: stateTypes = {
   allProduct : [],
-  product : []
+  product : [],
+  user: [],
+  detail: []
   
 }
 
@@ -24,7 +26,16 @@ export default function rootReducer(state = inicialState,action: Action){
           ...state,
           allProduct: action.payload
         }
-    default:
+      case GET_PRODUCTS_BY_ID:
+        return{
+          ...state,
+          detail: action.payload                                                                                                                                                                                                                                                                                                                                                                                                              
+        }
+      case POST_USER:
+        return{
+          ...state
+        }  
+        default:
       return state
   }
 }

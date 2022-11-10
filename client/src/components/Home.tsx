@@ -7,6 +7,7 @@ import React from "react"
 import Card from "./Card"
 import NavBar from '../components/NavBar'
 import Paginado from "./Paginado"
+import { NavLink } from "react-router-dom"
 
 
 export default function Home(){
@@ -25,7 +26,7 @@ export default function Home(){
   useEffect(()=>  {
     dispatch(getProducts())
   },[dispatch])
-  console.log(product)
+  
   return(
     <div>
       <NavBar/>
@@ -42,11 +43,14 @@ export default function Home(){
             currentProduct?.map((e: product) =>  {
               return(
                 <div>
-                 <Card
-                  img ={e.img}
-                  name= {e.name}
-                 precio_venta={e.precio_venta}
-               />
+                  <NavLink  to={`/home/${e._id}`} > 
+                    <Card
+                      img ={e.img}
+                      name= {e.name}
+                      precio_venta={e.precio_venta}
+                      key={e._id}
+                    />
+                  </NavLink> 
                 </div>
               )
             })

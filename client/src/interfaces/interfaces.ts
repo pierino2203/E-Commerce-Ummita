@@ -5,6 +5,7 @@ export type Action ={
 }
 
 export interface product{
+    _id: string
     name: string
     precio_compra: number
     precio_venta: number
@@ -17,4 +18,6 @@ export interface product{
 export type stateTypes = {
     product: [] | []
     allProduct : [] | []
+    user: [] | []
+    detail: [] | []
 }
