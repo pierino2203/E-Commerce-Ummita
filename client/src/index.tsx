@@ -5,17 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux'
 import {store} from './redux/store'
+import { createRoot } from 'react-dom/client';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const container = document.getElementById('root')!;
+const root = createRoot(container);
 root.render(
   
-    <React.StrictMode>
+    <React.Fragment>
       <Provider store={store}>
         <App />
       </Provider>  
-    </React.StrictMode>
+    </React.Fragment>
   
 );
 

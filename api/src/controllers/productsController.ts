@@ -1,17 +1,30 @@
 import { RequestHandler, Request } from "express";
 import { isValidObjectId } from "mongoose";
 import Product from "../models/Product";
+import { product } from "./interfaces/interfaces";
+import mongoose from 'mongoose'
 type ReqQuery = { name ?: string }
 type ReqDictionary = {}
 type ReqBody = { foo1 ?: string }
 type ResBody = { foo3 ?: string }
 type SomeHandlerRequest = Request<ReqDictionary, ResBody, ReqBody, ReqQuery>
+const ObjectId = mongoose.Types.ObjectId
 
 export const getProduct: RequestHandler = async (req:SomeHandlerRequest,res) =>  {
   try {
     const {name}  = req.query
     
-    const product = await Product.find();
+    const product : Array<product> = await Product.aggregate([
+      {
+        $lookup:
+        {
+          from: 'categories',
+          localField: 'category',
+          foreignField: 'name',
+          as: 'CategoryProduct'
+        }
+      },{ $unwind: "$CategoryProduct"}
+    ]);
     
     if(!name){
       return res.status(200).json(product)
@@ -33,7 +46,18 @@ export const GetProductById : RequestHandler = async (req,res)  =>  {
   try {
     const {id} = req.params
     if(isValidObjectId(id)){
-      const product = await Product.findById(id)
+      const product = await Product.aggregate([
+        {
+          $lookup:
+          {
+            from: 'categories',
+            localField: 'category',
+            foreignField: 'name',
+            as: 'CategoryProduct'
+          }
+        },{ $unwind: "$CategoryProduct"}
+        ,{$match: {_id: new ObjectId(id)}} 
+      ]);
       if(product){
         return res.status(200).json(product)
       }else{

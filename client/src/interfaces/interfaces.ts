@@ -4,6 +4,18 @@ export type Action ={
     payload? : any
 }
 
+export interface user {
+    _id: string,
+    name: string,
+    lastName: string,
+    mail: string,
+    password: string,
+    adress: string,
+    img: string,
+    admin: boolean
+
+}
+
 export interface product{
     _id: string
     name: string
@@ -13,11 +25,17 @@ export interface product{
     img: string
     stock: number
     on: boolean
+    category: string
+    CategoryProduct: object
   }
 
 export type stateTypes = {
     product: [] | []
     allProduct : [] | []
-    user: [] | []
+    user: any
     detail: [] | []
+    cart: [] | []
+    error: string | ''
+    userDetail: [] | []
+    
 }

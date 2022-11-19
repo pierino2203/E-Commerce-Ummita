@@ -18,7 +18,8 @@ export interface product{
   description: string,
   img: string,
   stock: number,
-  on: boolean
+  on: boolean,
+  category: string
 }
 export interface category{
   name: string

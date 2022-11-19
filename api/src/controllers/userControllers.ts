@@ -20,20 +20,26 @@ export const getUser: RequestHandler = async (req,res)  =>  {
   }  
 }
 
-export const getUserById: RequestHandler = async (req,res)  =>  {
-  try {
-    const {id} = req.params
-    if(isValidObjectId(id)){
-      const user = await User.findById(id)
+export const getUserById: RequestHandler = async (req: any,res)  =>  {
+  // try {
+    // const {id} = req.params
+    // if(isValidObjectId(id)){
+    //   const user = await User.findById(id)
+    //   if(user){
+    //     return res.status(200).json(user)
+    //   }else{
+    //     return res.status(404).send(`Usuario de id ${id} no se encuentra`)
+    //   }
+    // }else{
+    //   return res.status(404).send("El ID no es valido")
+    // }
+    try{
+      const user = await User.findById(req.userId,{password: 0})
       if(user){
         return res.status(200).json(user)
       }else{
-        return res.status(404).send(`Usuario de id ${id} no se encuentra`)
+        return res.status(404).send(`Usuario no se encuentra`)
       }
-    }else{
-      return res.status(404).send("El ID no es valido")
-    }
-
   } catch (error) {
     console.log("Error en GET USER ID",error)
   }
@@ -46,6 +52,7 @@ export const register: RequestHandler = async (req,res) =>  {
       return res.status(404).send("Faltan datos, ingrese datos requeridos")
     }
     const find = await User.findOne({mail:mail})
+    
     if(find){
       return res.status(202).send("Usuario con ese mail ya existe")
     }else{

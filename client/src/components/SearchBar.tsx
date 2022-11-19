@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAppDispatch } from '../config'
-import { getProductByName, getProducts } from '../redux/actions'
+import { getProductByName } from '../redux/actions'
 
 export default function SearchBar(){
   const dispatch: any = useAppDispatch()

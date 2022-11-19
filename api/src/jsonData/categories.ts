@@ -1,8 +1,9 @@
 const categories : object[]= [
-    {"name": "MATE"},
-    {"name": "CASA"},
-    {"name": "COCINA"},
-    {"name": "VELAS"},
-    {"name": "BOTELLAS"}
+    {"name": "Mate"},
+    {"name": "Casa"},
+    {"name": "Cocina"},
+    {"name": "Velas"},
+    {"name": "Botellas"},
+    {"name": "Cafe"}
  ]
 export default categories

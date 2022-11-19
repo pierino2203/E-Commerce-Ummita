@@ -1,8 +1,8 @@
-import { Action, product, stateTypes } from "../interfaces/interfaces"
+import { Action, product, stateTypes, user } from "../interfaces/interfaces"
 import { Dispatch, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useAppDispatch, useAppSelector } from "../config"
-import { getProducts } from "../redux/actions"
+import { getProducts, getUserData } from "../redux/actions"
 import React from "react"
 import Card from "./Card"
 import NavBar from '../components/NavBar'
@@ -13,6 +13,7 @@ import { NavLink } from "react-router-dom"
 export default function Home(){
   const dispatch: any = useAppDispatch()
   const product: product | [] = useAppSelector((state: stateTypes) => state.allProduct)
+  const carrito = useAppSelector((state: stateTypes)=> state.cart)
   const [currentPage,setCurrentPage] = useState(1)
   const [productPerPage,setProductPerPage] = useState(4)
   const indexOfLastProduct = currentPage*productPerPage
@@ -22,9 +23,11 @@ export default function Home(){
   const paginado = (numberPage: number)=>{
     setCurrentPage(numberPage)
   }
-
+  let token: any= localStorage.getItem('token')
+  
   useEffect(()=>  {
     dispatch(getProducts())
+    
   },[dispatch])
   
   return(
@@ -42,15 +45,15 @@ export default function Home(){
           {
             currentProduct?.map((e: product) =>  {
               return(
-                <div>
-                  <NavLink  to={`/home/${e._id}`} > 
-                    <Card
+                <div key={e._id}>
+                  <Card
+                      _id={e._id}
                       img ={e.img}
                       name= {e.name}
                       precio_venta={e.precio_venta}
                       key={e._id}
+                      product={e}
                     />
-                  </NavLink> 
                 </div>
               )
             })
