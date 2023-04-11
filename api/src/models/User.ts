@@ -30,7 +30,11 @@ const userSchema= new Schema({
   admin:{
     type: Boolean,
     default: false
-  }
+  },
+  orders:[{
+    type: Schema.Types.ObjectId,
+    ref: 'order'
+  }]
 },{
   timestamps: false,
   versionKey: false

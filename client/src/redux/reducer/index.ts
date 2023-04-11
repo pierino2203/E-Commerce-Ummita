@@ -56,9 +56,7 @@ export default function rootReducer(state = inicialState,action: Action){
       let item: any = localStorage.getItem('carrito')
       let it: any= JSON.parse(item)
       localStorage.setItem('carrito', JSON.stringify([]))
-      console.log(localStorage.getItem('carrito'))
       const final =it.filter((e: any) => e.product._id!==action.payload )
-      console.log(final)
       localStorage.setItem('carrito', JSON.stringify(final))
       return {
           ...state,

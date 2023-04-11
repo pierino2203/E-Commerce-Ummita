@@ -33,10 +33,16 @@ export default function Card ({_id,name, img, precio_venta, product}: Props){
       <img src= {img}  width='200px' height='250px'/>
       <h3>{name}</h3>
       <h3>$ {precio_venta}</h3>
-      <NavLink  to={`/home/${_id}`} >
-        <button>Ver mas</button>
-      </NavLink>
-      <button onClick={()=>handleClick()}>Agregar al carrito</button>
+      {
+        product.stock>0 ?
+        <>
+          <NavLink  to={`/home/${_id}`} >
+            <button>Ver mas</button>
+          </NavLink>
+          <button onClick={()=>handleClick()}>Agregar al carrito</button>
+        </>
+      : <label>No disponible</label>  
+    }
     </div>
   )
 }

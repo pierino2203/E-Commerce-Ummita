@@ -27,3 +27,14 @@ export interface category{
 export interface proveedor{
   name: string
 }
+
+
+export interface order{
+  user_id: ObjectId,
+  date: Date,
+  payment: boolean,
+  productos: Array<product>
+  total: number
+  _id: ObjectId
+
+}

@@ -31,6 +31,7 @@ export default function FormLoggin(){
       alert("Ingrese los datos requeridos")
     }
   }
+  console.log(input)
   return(
     <div>
       <form onSubmit={(e)=> handleSubmit(e)}>

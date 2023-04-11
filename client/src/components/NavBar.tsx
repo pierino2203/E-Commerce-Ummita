@@ -17,7 +17,7 @@ export default function NavBar(){
   
   useEffect(()=>  {
     dispatch(getUserData(JSON.parse(token)))
-  },[])
+  },[token])
   function handlerlogOut(){
     localStorage.setItem('token',JSON.stringify([]))
     dispatch(logOut())
@@ -43,10 +43,14 @@ export default function NavBar(){
                   <NavLink to='/user'><h1>Mi cuenta</h1> </NavLink>           
                     
                  <button onClick={()=>handlerlogOut()}>cerrar sesion</button>
+                 
+
                 </div>
                 : <NavLink to='/loggin'><button>Iniciar Sesion</button></NavLink>
               }
+              
             </div>
+            <NavLink to='/cart'><button>Cartito</button></NavLink>  
           </div>
         </li>
 

@@ -1,6 +1,7 @@
 import { stringify } from 'querystring'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../config'
 import { product, stateTypes } from '../interfaces/interfaces'
 import { actualizarCart, addCart, getProductById } from '../redux/actions'
@@ -20,30 +21,35 @@ export default function ProductDetail(props: any){
   }
   function deleteCart(elemento:any){
     const itemsLocal: any = localStorage.getItem('carrito')
-    console.log(itemsLocal)
+    // console.log(itemsLocal)
     const items: any= JSON.parse(itemsLocal)
     localStorage.setItem('carrito', JSON.stringify([]))
-    console.log(items)
+    // console.log(items)
     // localStorage.setItem('carrito', JSON.stringify([]))
     const find = items.map((e: any)=>  {
-      console.log(e.product._id)
-      console.log(elemento.product._id)
       if(e.product._id === elemento.product._id){
-        console.log('hola')
+        // console.log('hola')
         e.cantidad = e.cantidad +1
+        
       }
       return e
     })
-    console.log(find)
+    // console.log(find)
     localStorage.setItem('carrito', JSON.stringify(find))
+    alert(`Se actializo cantidad en el Carrito`)
   }
   function handleClick(){
     const itemsLocal: any = localStorage.getItem('carrito')
     const items: any= JSON.parse(itemsLocal)
     const find = items.find((e: any) => e.product._id ===product[0]._id)
-    // console.log(find)
+    console.log(find)
     if(find){
-      deleteCart(find)
+      if(find.product.stock>=find.cantidad){
+        deleteCart(find)
+      }else{
+        alert('No hay mas Stock para agregar')
+      }
+      
          
     }else{
       let prod ={
@@ -60,9 +66,11 @@ export default function ProductDetail(props: any){
   
   return(
     <div>
+      <NavLink to='/home'><button>Atras</button></NavLink>
       {
         product.length>0 ?
           <div>
+            
             <div>
               <h1>{product[0].name}</h1>
               <img src={product[0].img}/>
