@@ -4,7 +4,7 @@ import { verifyToken } from '../util/verifyToken'
 
 const userRouter = Router()
 
-userRouter.get('/user',getUser)
+userRouter.get('/user',verifyToken,getUser)
 userRouter.get('/user/token',verifyToken,getUserById)
 userRouter.post('/user/register',register)
 userRouter.post('/user/login',login)

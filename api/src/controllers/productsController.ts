@@ -83,6 +83,9 @@ export const postProduct : RequestHandler = async (req,res) => {
         return res.status(404).send("Ya existe un producto con ese nombre")
       }else{
         const product = new Product(req.body)
+        product.precio_D = precio_venta*1.1
+        product.precio_C = precio_venta*1.17
+        console.log(product)
         await product.save()
         return res.status(200).json(product)
       }

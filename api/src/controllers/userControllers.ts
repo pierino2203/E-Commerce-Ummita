@@ -48,7 +48,7 @@ export const getUserById: RequestHandler = async (req: any,res)  =>  {
 export const register: RequestHandler = async (req,res) =>  {
   try {
     const {name,lastName,mail,password,adress} = req.body
-    if(!name || !lastName || !mail || !password || !adress){
+    if(!name || !lastName || !mail || !password){
       return res.status(404).send("Faltan datos, ingrese datos requeridos")
     }
     const find = await User.findOne({mail:mail})

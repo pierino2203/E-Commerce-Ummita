@@ -18,6 +18,14 @@ const productSchema = new Schema({
     type: Number,
     require: true
   },
+  precio_D:{
+    type: Number,
+    require: true
+  },
+  precio_C:{
+    type: Number,
+    require: true
+  },
   description:{
     type: String,
   },

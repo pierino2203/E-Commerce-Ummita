@@ -14,7 +14,7 @@ const orderSchema = new Schema({
     require: true
   },
   payment:{
-    type: Boolean,
+    type: String,
     default: false
   },
   productos:[{

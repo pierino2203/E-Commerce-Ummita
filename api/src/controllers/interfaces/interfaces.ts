@@ -15,6 +15,8 @@ export interface product{
   name: string,
   precio_compra: number,
   precio_venta: number,
+  precio_D: number,
+  precio_C: number,
   description: string,
   img: string,
   stock: number,
