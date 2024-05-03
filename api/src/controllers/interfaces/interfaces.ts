@@ -13,6 +13,7 @@ export interface user {
 
 export interface product{
   name: string,
+  tipo: string,
   precio_compra: number,
   precio_venta: number,
   precio_D: number,

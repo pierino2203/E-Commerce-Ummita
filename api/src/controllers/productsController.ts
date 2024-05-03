@@ -16,16 +16,13 @@ export const getProduct: RequestHandler = async (req:SomeHandlerRequest,res) => 
     
     const product : Array<product> = await Product.aggregate([
       {
-        $lookup:
-        {
-          from: 'categories',
-          localField: 'category',
-          foreignField: 'name',
-          as: 'CategoryProduct'
+        $group: {
+          _id: '$_id', // Agrupar por el ID del producto
+          product: { $first: '$$ROOT' } // Mantener solo el primer documento de cada grupo
         }
-      },{ $unwind: "$CategoryProduct"}
+      },
+      { $replaceRoot: { newRoot: '$product' } } 
     ]);
-    
     if(!name){
       return res.status(200).json(product)
     }
@@ -55,8 +52,8 @@ export const GetProductById : RequestHandler = async (req,res)  =>  {
             foreignField: 'name',
             as: 'CategoryProduct'
           }
-        },{ $unwind: "$CategoryProduct"}
-        ,{$match: {_id: new ObjectId(id)}} 
+        },{ $unwind: "$CategoryProduct"},
+
       ]);
       if(product){
         return res.status(200).json(product)
@@ -82,10 +79,14 @@ export const postProduct : RequestHandler = async (req,res) => {
       if(find){
         return res.status(404).send("Ya existe un producto con ese nombre")
       }else{
+        
+        if(req.body._id != null){
+          delete req.body._id
+        }
+        console.log(req.body)
         const product = new Product(req.body)
         product.precio_D = precio_venta*1.1
         product.precio_C = precio_venta*1.17
-        console.log(product)
         await product.save()
         return res.status(200).json(product)
       }

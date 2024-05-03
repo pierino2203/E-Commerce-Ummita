@@ -6,10 +6,9 @@ const productSchema = new Schema({
     type: String,
     require: true
   },
-  // codigo:{
-  //   type: String,
-  //   require: true
-  // },
+  tipo:{
+    type: String,
+  },
   precio_compra:{
     type: Number,
     require: true

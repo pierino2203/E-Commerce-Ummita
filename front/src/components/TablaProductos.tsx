@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
-import { Col, Row, Table } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Row, Table } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../shared/hooks";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getAllProducts } from "../redux/slice/productSlice";
 import Navbar1 from "./NavBar1";
+import ModalAgreProd from "./ModalAgreProd";
 
 const TablaProductos = () => {
   const dispatch = useAppDispatch();
   const { list } = useAppSelector((state) => state.product);
-  
   const token: any = localStorage.getItem('token');
+  const [modalShow, setModalShow] = useState(false);
+  
   useEffect(() => {
     dispatch(getAllProducts(JSON.parse(token)));
   }, []);
@@ -17,8 +19,9 @@ const TablaProductos = () => {
     <div className="container">
       <Navbar1 />
       <div className="d-flex justify-content-evenly">
+      <button type="button" className="btn btn-primary mt-3 mb-3" onClick={() => setModalShow(true)}>Agregar producto</button>
+      <ModalAgreProd show={modalShow} onHide={() => setModalShow(false)} />
       <NavLink to='/venta'><button type="button" className="btn btn-primary mt-3 mb-3">Realizar Venta</button></NavLink>
-      <NavLink to='/venta'><button type="button" className="btn btn-primary mt-3 mb-3">Agregar Producto</button></NavLink>
       <NavLink to='/venta'><button type="button" className="btn btn-primary mt-3 mb-3">Modificar Producto</button></NavLink>
       </div>
       {
@@ -32,7 +35,9 @@ const TablaProductos = () => {
                     <th>Img</th>
                     <th>Nombre</th>
                     <th>Precio Costo</th>
-                    <th>Precio Venta</th>
+                    <th>Precio E</th>
+                    <th>Precio D</th>
+                    <th>Precio C</th>
                     <th>Stock</th>
                   </tr>
                 </thead>
@@ -46,6 +51,8 @@ const TablaProductos = () => {
                           <td>{product.name}</td>
                           <td>{product.precio_compra}</td>
                           <td>{product.precio_venta}</td>
+                          <td>{product.precio_D}</td>
+                          <td>{product.precio_C}</td>
                           <td>{product.stock}</td>
                         </tr>
                       )) : <p>Loading</p>}

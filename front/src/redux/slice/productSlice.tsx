@@ -7,12 +7,18 @@ export interface Product {
     name: string;
     precio_compra: number;
     precio_venta: number;
+    precio_D: number;
+    precio_C: number;
     description: string;
     img: string;
+    tipo: string;
     stock: number;
     on: boolean;
     category: string;
     CategoryProduct: object;
+}
+export interface formProduct{
+
 }
 
 export interface ProductState {
@@ -79,10 +85,16 @@ export const getProductById =(id : string,token : {auth:boolean,token: string})=
                 "x-access-token": token.token,
             }
         });
-        console.log(res.data[0])
         dispatch(getProduct({ list: [],productDetail: res.data}));
     } catch (error) {
         console.log(error);
+    }
+}
+export const createProduct= (data: Product)=> async (dispatch: AppDispatch)=>{
+    try {
+        await axios.post('http://localhost:4000/product/',data)
+    } catch (error) {
+        console.log('Error al agregar producto',error)
     }
 }
 export default productSlice.reducer;
