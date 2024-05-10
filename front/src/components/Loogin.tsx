@@ -22,7 +22,7 @@ export default function Loggin() {
         e.preventDefault(); // Evita que se recargue la página al enviar el formulario
         if(input.password!='' || input.password!=''){
             dispatch(logginUser(input,navigate));
-            navigate('/productos')
+            navigate('/home')
         }
         else{
             alert('Ingrese los datos')

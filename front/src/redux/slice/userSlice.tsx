@@ -64,7 +64,6 @@ export const getAllUsers = (token: { auth: boolean, token: string }) => async (d
         "x-access-token": token.token,
       }
     });
-    console.log(response.data)
     // Actualiza el estado con los usuarios obtenidos correctamente
     dispatch(getUsers({
       user: response.data,
@@ -87,16 +86,15 @@ export const logginUser = (data: formLoggin, navigate: any) => async (dispatch: 
   try {
     const user = (await axios.post('http://localhost:4000/user/login', data)).data
     localStorage.setItem('token', JSON.stringify(user))
-    navigate('/productos')
+    navigate('/home')
   } catch (error) {
     console.log('Error en loggin', error)
   }
 }
-export const logOut = () => (dispatch: AppDispatch) => {
+export const logOut = (navigate: any) => (dispatch: AppDispatch) => {
   try {
-    console.log('hola')
     localStorage.setItem('token', JSON.stringify([]))
-    window.location.reload()
+    navigate('/loggin')
   } catch (error) {
     console.log(error)
   }

@@ -8,17 +8,18 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useAppDispatch } from "../shared/hooks";
 import { getProductByName } from "../redux/slice/productSlice";
 import { logOut } from "../redux/slice/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar1() {
   const [name, setName] = useState('')
   const dispatch = useAppDispatch();
   const token: any = localStorage.getItem('token');
+  const navigate = useNavigate();
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value)
   }
   function handleLogOut(e: any) {
-    console.log('hola')
-    dispatch(logOut())
+    dispatch(logOut(navigate))
     localStorage.setItem('token', JSON.stringify([]))
   }
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -32,7 +33,7 @@ export default function Navbar1() {
         JSON.parse(token).token ?
           <Navbar expand="lg" className="bg-body-tertiary">
             <Container fluid>
-              <Navbar.Brand href="#">Ummita en Chala</Navbar.Brand>
+              <Navbar.Brand href="/home"><strong>Ummita en Chala</strong></Navbar.Brand>
               <Nav
                 className="me-auto my-2 my-lg-0"
                 style={{ maxHeight: '100px' }}
@@ -55,7 +56,7 @@ export default function Navbar1() {
           </Navbar>
           : <Navbar expand="lg" className="bg-body-tertiary">
             <Container fluid>
-              <Navbar.Brand href="#">Ummita en Chala</Navbar.Brand>
+              <Navbar.Brand href="/home">Ummita en Chala</Navbar.Brand>
               <Nav
                 className="me-auto my-2 my-lg-0"
                 style={{ maxHeight: '100px' }}

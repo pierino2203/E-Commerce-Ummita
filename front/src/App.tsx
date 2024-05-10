@@ -6,6 +6,8 @@ import FormSignUp from './components/FormSingUp';
 import Loggin from './components/Loogin';
 import TablaProductos from './components/TablaProductos';
 import Venta from './components/Venta';
+import Home from './components/Home';
+import TablaVentas from './components/TablaVentas';
 
 function App() {
   const token = JSON.parse(localStorage.getItem('token')!)
@@ -27,7 +29,9 @@ function App() {
           <Route path='/registrar' element={<FormSignUp/>}/>
           <Route path='/loggin' element={<Loggin/>}/>   
           <Route path='/productos' element={<TablaProductos/>}/>   
-          <Route path='/venta' element={<Venta/>}/>        
+          <Route path='/venta' element={<Venta/>}/>    
+          <Route path='/home' element={<Home/>}/> 
+          <Route path='/caja' element={<TablaVentas/>}/>     
         </Routes>
       </Router>
     </div>

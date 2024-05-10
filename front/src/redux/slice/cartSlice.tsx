@@ -6,6 +6,8 @@ export interface ProductCart{
     _id: string;
     name: string;
     precio_venta: number;
+    precio_C: number;
+    precio_D: number;
     img: string;
     stock: number;
     cantidad: number;

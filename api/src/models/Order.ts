@@ -17,7 +17,10 @@ const orderSchema = new Schema({
     type: String,
     default: false
   },
-  productos:[{
+  cart: {
+    type: Array
+  },
+  products:[{
     type: Schema.Types.ObjectId,
     ref: 'products'
   }] 

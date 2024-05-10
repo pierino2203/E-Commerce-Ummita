@@ -38,6 +38,7 @@ export interface order{
   payment: boolean,
   productos: Array<product>
   total: number
-  _id: ObjectId
+  _id: ObjectId,
+  cart: []
 
 }
